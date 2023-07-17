@@ -25,15 +25,9 @@ public class TsubuyakiController {
         List<Tsubuyaki> list = ts.getAllTsubuyaki(); //全つぶやきを取得
         model.addAttribute("tsubuyakiList", list);   //モデル属性にリストをセット
         model.addAttribute("tsubuyakiForm", new TsubuyakiForm());  //空フォームをセット
-        return "tsubuyaki_list"; //リスト画面を返す      
-    }
-    //検索結果画面を表示
-    @GetMapping("/search")
-    String showKensakuList(Model model) {
-        List<Tsubuyaki> list = ts.getAllTsubuyaki(); //全つぶやきを取得
         model.addAttribute("kensakuList", list);
         model.addAttribute("kensakuForm", new KensakuForm());  //空フォームをセット
-        return "kensaku_list"; //リスト画面を返す      
+        return "tsubuyaki_list"; //リスト画面を返す      
     }
 
     //つぶやきを投稿
@@ -48,15 +42,13 @@ public class TsubuyakiController {
         return "redirect:/read"; //メイン画面に転送
     }
 
-    /*検索結果を投稿
-    @PostMapping("/search")
-    String postTsubuyaki(@ModelAttribute("kensakuForm") KensakuForm form, Model model) {
-        //フォームからエンティティに移し替え
-        Tsubuyaki t = new Tsubuyaki();
-        //t.setName(form.getName());
-        t.setKeyword(form.getKeyword());
-        //サービスに投稿処理を依頼
-        ts.postTsubuyaki(t);
-        return "redirect:/search"; //検索結果画面に転送
-    }*/
+    //検索結果画面を表示
+    @GetMapping("/search")
+    String kensakuTsubuyaki(@ModelAttribute("tsubuyakiForm") Tsubuyaki form, Model model) {
+        final List<Tsubuyaki> list = ts.kensakuTsubuyaki(form.getKeyword()); //全つぶやきを取得
+        model.addAttribute("kensakuList", list);
+        ts.kensakuTsubuyaki(form.getKeyword());
+        return "kensaku_list"; //リスト画面を返す      
+    }
+
 }

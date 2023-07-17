@@ -25,7 +25,7 @@
     </form>
 
     <h2>検索する</h2>
-    <form th:action="@{/read}" th:object="${kensakuForm}" method="post">
+    <form th:action="@{/search}" th:object="${kensakuForm}" method="get">
         <label for="keyword">検索キーワード：</label>
         <input type="text" required th:field="*{keyword}" />
         <input type="submit" th:href="@{/search}" value="検索する" />
